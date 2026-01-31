@@ -4,8 +4,8 @@ import "./App.css";
 
 import Navbar from "./components/navbar/navbar";
 
-import HomePage from "./components/pages/homePage/homePage";
-import LiveScores from "./components/pages/liveScores/liveScores";
+import HomePage from "./components/pages/HomePage/HomePage";
+import LiveScores from "./components/pages/LiveScores/LiveScores";
 import Announcement from "./components/pages/Announcement/Announcement";
 
 function App() {
