@@ -8,32 +8,30 @@ const LiveScores = () => {
 
   useEffect(() => {
     const getScoresData = async () => {
-      const data = await axios.get("");
-
-      const rankedData = data.sort(
-        (house1, house2) => house2.score - house1.score,
-      );
+      const data = await axios.get("http://localhost:5000/api/live-scores");
 
       let finalData = [];
-      data.forEach((house, i) => {
+      data.data.forEach((house) => {
         finalData.push({
-          rank: i + 1,
+          rank: house.rank,
           name: house.name,
           score: house.house_points,
         });
       });
       sethousesRank(finalData);
     };
+    getScoresData();
   }, []);
   return (
     <>
       <div className="liveScores">
-        <div class="heading">
+        <div className="heading">
+          {" "}
           <h1>🏆 Live House Scores</h1>
           <p>Current standings of all Darsanians' Houses</p>
         </div>
         <div className="rank-table">
-          <Table>
+          <Table bordered>
             <thead>
               <tr>
                 <th className="ranks-column">Ranks</th>
@@ -42,10 +40,10 @@ const LiveScores = () => {
               </tr>
             </thead>
             <tbody>
-              {housesRank.map((house) => {
+              {housesRank.map((house, i) => {
                 return (
-                  <tr>
-                    <td>{house.rank}</td>
+                  <tr key={i}>
+                    <td className="text-center">{house.rank}</td>
                     <td>{house.name}</td>
                     <td>{house.score}</td>
                   </tr>
