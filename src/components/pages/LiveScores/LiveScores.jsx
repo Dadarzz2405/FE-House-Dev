@@ -8,14 +8,14 @@ const LiveScores = () => {
 
   useEffect(() => {
     const getScoresData = async () => {
-      const data = await axios.get("http://localhost:5000/api/live-scores");
+      const data = await axios.get("http://localhost:5000/api/live-points");
 
       let finalData = [];
       data.data.forEach((house) => {
         finalData.push({
           rank: house.rank,
           name: house.name,
-          score: house.house_points,
+          score: house.points,
         });
       });
       sethousesRank(finalData);
