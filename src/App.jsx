@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/navbar/navbar";
 
@@ -9,9 +9,17 @@ import LiveScores from "./components/pages/LiveScores/LiveScores";
 import Announcement from "./components/pages/Announcements/Announcements";
 
 const App = () => {
+  const [activatedPage, setActivatedPage] = useState("");
+  const location = useLocation();
+
+  React.useEffect(() => {
+    const path = location.pathname;
+    setActivatedPage(path);
+  }, [location]);
+
   return (
     <>
-      <Navbar />
+      <Navbar activatedPage={activatedPage} />
       <Routes>
         <Route path="/" Component={HomePage}></Route>
         <Route path="/livescores" Component={LiveScores}></Route>
