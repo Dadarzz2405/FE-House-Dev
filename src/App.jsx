@@ -8,11 +8,9 @@ import LiveScores from "./components/pages/LiveScores/LiveScores";
 import Announcement from "./components/pages/Announcements/Announcements";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
       <Routes>
         <Route path="/" Component={HomePage}></Route>
         <Route path="/leaderboard" Component={LiveScores}></Route>
