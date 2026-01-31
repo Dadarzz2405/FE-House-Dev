@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
 
 import Navbar from "./components/navbar/navbar";
 
 import HomePage from "./components/pages/HomePage/HomePage";
 import LiveScores from "./components/pages/LiveScores/LiveScores";
-import Announcement from "./components/pages/Announcement/Announcement";
+import Announcement from "./components/pages/Announcements/Announcements";
 
 function App() {
   const [count, setCount] = useState(0);
