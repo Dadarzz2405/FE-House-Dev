@@ -1,21 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Navbar, Container } from "react-bootstrap";
 import "./navbar.css";
 
-const Navbar = () => {
+const NavbarContainer = () => {
   return (
     <>
-      <div className="navbar">
-        <h1 className="logo">Navbar</h1>
-        <h1 className="main-heading">Houses</h1>
-        <div className="navigation">
-          <Link to="/">Home</Link>
-          <Link to="/leaderboard">Leader Board</Link>
-          <Link to="/announcement">Announcement</Link>
-        </div>
+      <div className="navbar-container">
+        <Navbar className="bg-body-tertiary">
+          <Container>
+            <Navbar.Brand href="#home">GDA Logo</Navbar.Brand>
+            <Navbar.Brand href="/" className="houses-navbar">
+              Houses
+            </Navbar.Brand>
+            <div className="nav-links">
+              <Link to="/">Home Page</Link>
+              <Link to="/livescores">Live Scores</Link>
+              <Link to="/announcement">Announcement</Link>
+            </div>
+          </Container>
+        </Navbar>
       </div>
     </>
   );
 };
 
-export default Navbar;
+export default NavbarContainer;

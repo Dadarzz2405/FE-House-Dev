@@ -1,26 +1,35 @@
-.navbar {
+nav.navbar {
   height: 50px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: black;
-}
-.navbar .logo,
-.navbar .navigation {
-  margin-inline: 30px;
+  position: relative;
 }
 
-.navbar h1 {
+.navbar .navbar-brand {
   color: white;
+  font-weight: bold;
 }
 
-.navigation {
+.navbar .houses-navbar {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.navbar .nav-links {
   display: flex;
   gap: 15px;
 }
 
-.navigation a {
+.navbar .nav-links a {
   text-decoration: none;
   color: white;
   border-radius: 3px;
@@ -28,7 +37,7 @@
   transition: all 0.1s linear;
 }
 
-.navigation a:hover {
+.navbar .nav-links a:hover {
   background-color: white;
   color: black;
 }
