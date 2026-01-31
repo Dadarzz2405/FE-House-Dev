@@ -1,0 +1,35 @@
+.liveScores {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.liveScores .heading {
+  margin-top: 50px;
+}
+
+.liveScores .rank-table {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.liveScores .rank-table table {
+  width: 100%;
+}
+
+.liveScores .rank-table table .ranks-column {
+  width: 50px;
+  padding-inline: 10px;
+}
+
+.liveScores .rank-table table .scores-column {
+  padding-inline: 10px;
+  width: 50px;
+}
+
+.liveScores .rank-table table .name-column {
+  text-align: left;
+  padding-inline: 30px;
+}

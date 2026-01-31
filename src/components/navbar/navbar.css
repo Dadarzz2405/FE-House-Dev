@@ -1,0 +1,34 @@
+.navbar {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+}
+.navbar .logo,
+.navbar .navigation {
+  margin-inline: 30px;
+}
+
+.navbar h1 {
+  color: white;
+}
+
+.navigation {
+  display: flex;
+  gap: 15px;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: white;
+  border-radius: 3px;
+  padding: 2px 5px 2px 5px;
+  transition: all 0.1s linear;
+}
+
+.navigation a:hover {
+  background-color: white;
+  color: black;
+}
