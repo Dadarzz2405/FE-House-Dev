@@ -12,18 +12,19 @@ const Announcements = () => {
       const data = await axios.get("http://localhost:5000/api/announcements");
 
       let finalData = [];
-      data.data.forEach((house) => {
+      data.data.forEach((a) => {
         finalData.push({
-          title: house.title,
-          content: house.content,
-          date: house.created_at,
-          house: house.house.name,
+          title: a.title,
+          content: a.content,
+          date: a.created_at,
+          house: a.house?.name ?? "Unknown",
           captain: {
-            name: house.house.captain.name,
-            username: house.house.captain.username,
+            name: a.captain?.name ?? "Unknown",
+            username: a.captain?.username ?? "-",
           },
         });
       });
+
       setAnnounce(finalData);
       console.log(data);
     };
