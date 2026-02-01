@@ -38,7 +38,8 @@ const NavbarContainer = ({ activatedPage }) => {
               Announcements
             </Nav.Link>
             <Nav.Link 
-              href="http://localhost:5000/login"
+              as={Link}
+              to="/login"
               className="login-link"
             >
               Login
