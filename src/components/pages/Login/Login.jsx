@@ -1,10 +1,7 @@
 import { useState } from "react";
-<<<<<<< HEAD
-import api from "./../../../api/axios.js";
-=======
+import api from "./../../../API/axios.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
->>>>>>> 18c11497015b8a3b7d7f69e41578654dc0998ae7
 import "./Login.css";
 
 function Login() {
