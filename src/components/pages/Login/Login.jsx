@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../../API/axios";
+import api from "./../../../api/axios.js";
 import "./Login.css";
 
 function Login() {
@@ -28,7 +28,6 @@ function Login() {
       } else {
         window.location.href = "/dashboard";
       }
-
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
     }

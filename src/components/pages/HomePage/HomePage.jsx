@@ -9,6 +9,7 @@ import Al_Adiyat from "../../../Assets/Houses/Al-Adiyat.png";
 import An_Nun from "../../../Assets/Houses/An-Nun.png";
 import An_Nahl from "../../../Assets/Houses/An-Nahl.png";
 import An_Naml from "../../../Assets/Houses/An-Naml.png";
+import { data } from "react-router-dom";
 
 const houseImages = {
   "Al-Ghuraab": Al_Ghuraab,
@@ -25,7 +26,16 @@ function HomePage() {
   useEffect(() => {
     const getHouses = async () => {
       const response = await axios.get("http://localhost:5000/api/houses");
-      setHouses(response.data);
+      let data = [];
+      response.data.forEach((house) => {
+        data.push({
+          id: Math.floor(Math.random() * 10000),
+          name: house.name,
+        });
+      });
+      console.log(data);
+      let dataSorted = data.sort((a, b) => a.id - b.id);
+      setHouses(dataSorted);
     };
     getHouses();
   }, []);
@@ -34,43 +44,57 @@ function HomePage() {
     <div className="home-page">
       <div className="houses-display">
         {houses.map((house, i) => {
-          const topY = 100;
-          const changeY = 100;
-          const changeX = 200;
+          const originX = 50;
+          const originY = 900;
+          const change = 15;
           const middle = (houses.length - 1) / 2;
 
-          const y = Math.abs(i - middle) * changeY;
-          const x = (i - middle) * changeX;
-          const angle = (i - middle) * 10;
+          const angle = (i - middle) * change;
 
           return (
-            <Card
+            <div
               key={house.id ?? i}
               className="house-card"
               style={{
-                width: "150px",
-                height: "12rem",
+                width: "187.5px",
+                height: "250px",
                 position: "absolute",
-                left: `calc(50% + ${x}px)`,
-                top: `calc(${y + topY}px)`,
-                transform: `translate(-50%, -50%) rotate(${angle}deg)`
+                left: `50%`,
+                top: `15rem`,
+                transformOrigin: `${originX}% ${originY}px`,
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = `scale(1.3)`;
+                e.target.style.zIndex = 10;
+                e.target.style.transition = `transform 0.3s ease-out`;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = `scale(1)`;
+                e.target.style.zIndex = 0;
               }}
             >
-              <Card.Body className="text-center">
-                <img
-                  src={houseImages[house.name]}
-                  alt={house.name}
-                  className="house-image"
-                />
-                <Card.Title>{house.name}</Card.Title>
-              </Card.Body>
-            </Card>
+              <div
+                className="text-center"
+                style={{
+                  padding: "0",
+                  backgroundImage: `url(${houseImages[house.name]})`,
+                  backgroundClip: "border-box",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  height: "100%",
+                  width: "100%",
+                }}
+              ></div>
+            </div>
           );
         })}
       </div>
 
       <div className="home-title">
-        <h1>Houses</h1>
+        <h1>DARSANIAN'S</h1>
+        <h2>HOUSES</h2>
       </div>
     </div>
   );

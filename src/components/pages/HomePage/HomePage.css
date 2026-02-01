@@ -2,18 +2,13 @@
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  height: 100vh;
+  width: 100%;
+  align-items: center;
 }
 
 .home-page .houses-display {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  position: relative;
-  background-color: transparent;
   width: 100%;
-  height: 100vh;
+  height: 18rem;
 }
 
 .home-page .houses-display .house-card {
@@ -21,11 +16,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 2s ease-out;
 }
+
 .house-image {
   width: 100%;
   height: 80px;
   object-fit: contain;
   margin-bottom: 0.5rem;
+}
+.house-page .home-title {
+  margin-top: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
