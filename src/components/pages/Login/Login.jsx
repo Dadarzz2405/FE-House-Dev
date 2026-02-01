@@ -1,62 +1,96 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import api from "./../../../api/axios.js";
+=======
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+>>>>>>> 18c11497015b8a3b7d7f69e41578654dc0998ae7
 import "./Login.css";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      const res = await api.post("/api/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:5000/api/login",
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      console.log("Logged in:", res.data);
-
-      // optional: store user info
-      localStorage.setItem("user", JSON.stringify(res.data));
-
-      // redirect based on role
-      if (res.data.role === "admin") {
-        window.location.href = "/admin";
-      } else {
-        window.location.href = "/dashboard";
+      if (res.data.success) {
+        // Redirect to the appropriate dashboard
+        window.location.href = res.data.redirect;
       }
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>🏠 GDA Houses Login</h2>
+        <p className="login-subtitle">Sign in to access your dashboard</p>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <div className="error-message">{error}</div>}
 
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
 
-      <button type="submit">Login</button>
-    </form>
+          <button type="submit" disabled={loading} className="login-button">
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <div className="login-footer">
+          <a href="/" className="back-link">
+            ← Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -13,19 +13,22 @@ const App = () => {
   const [activatedPage, setActivatedPage] = useState("");
   const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const path = location.pathname;
     setActivatedPage(path);
   }, [location]);
 
+  // Don't show navbar on login page
+  const showNavbar = location.pathname !== "/login";
+
   return (
     <>
-      <Navbar activatedPage={activatedPage} />
+      {showNavbar && <Navbar activatedPage={activatedPage} />}
       <Routes>
-        <Route path="/" Component={HomePage}></Route>
-        <Route path="/livescores" Component={LiveScores}></Route>
-        <Route path="/announcement" Component={Announcement}></Route>
-        <Route path="/login" Component={Login}></Route>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/livescores" element={<LiveScores />} />
+        <Route path="/announcement" element={<Announcement />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );
