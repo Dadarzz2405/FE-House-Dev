@@ -19,10 +19,8 @@ function Login() {
 
       console.log("Logged in:", res.data);
 
-      // optional: store user info
       localStorage.setItem("user", JSON.stringify(res.data));
 
-      // redirect based on role
       if (res.data.role === "admin") {
         window.location.href = "/admin";
       } else {

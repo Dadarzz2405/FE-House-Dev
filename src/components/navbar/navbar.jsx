@@ -1,46 +1,52 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 import "./navbar.css";
 
 const NavbarContainer = ({ activatedPage }) => {
   return (
-    <>
-      <div className="navbar-container">
-        <Navbar className="bg-body-tertiary">
-          <Container>
-            <Navbar.Brand href="#home">GDA Logo</Navbar.Brand>
-            <Navbar.Brand href="/" className="houses-navbar">
-              Houses
-            </Navbar.Brand>
-            <div className="nav-links">
-              <Link
-                to="/"
-                className={activatedPage === "/" ? "text-primary" : ""}
-              >
-                Home Page
-              </Link>
-              <Link
-                to="/livescores"
-                className={
-                  activatedPage === "/livescores" ? "text-primary" : ""
-                }
-              >
-                Live Scores
-              </Link>
-              <Link
-                to="/announcement"
-                className={
-                  activatedPage === "/announcement" ? "text-primary" : ""
-                }
-              >
-                Announcement
-              </Link>
-            </div>
-          </Container>
-        </Navbar>
-      </div>
-    </>
+    <Navbar bg="dark" variant="dark" expand="lg" className="navbar-custom">
+      <Container>
+        <Navbar.Brand href="/">
+          <span className="brand-logo">🏠</span>
+          <span className="brand-text">GDA Houses</span>
+        </Navbar.Brand>
+        
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link 
+              as={Link} 
+              to="/" 
+              className={activatedPage === "/" ? "active-link" : ""}
+            >
+              Home
+            </Nav.Link>
+            <Nav.Link 
+              as={Link} 
+              to="/livescores" 
+              className={activatedPage === "/livescores" ? "active-link" : ""}
+            >
+              Live Scores
+            </Nav.Link>
+            <Nav.Link 
+              as={Link} 
+              to="/announcement" 
+              className={activatedPage === "/announcement" ? "active-link" : ""}
+            >
+              Announcements
+            </Nav.Link>
+            <Nav.Link 
+              href="http://localhost:5000/login"
+              className="login-link"
+            >
+              Login
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
