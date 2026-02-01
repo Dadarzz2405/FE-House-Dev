@@ -1,5 +1,4 @@
 import { useState } from "react";
-import api from "./../../../API/axios.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
@@ -28,7 +27,7 @@ function Login() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (res.data.success) {
