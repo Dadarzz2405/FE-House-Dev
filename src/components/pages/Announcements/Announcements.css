@@ -1,0 +1,92 @@
+h1 {
+  text-align: center;
+  margin: 40px 0 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.announce-card {
+  position: relative;
+  margin: 30px auto;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.announce-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.18),
+    0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.announce-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg, #5f9cff, #7ae0c3);
+}
+
+.announce-card .card-body {
+  padding: 18px;
+}
+
+.announce-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.announce-card .card-text {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.announce-card .card-text:last-of-type {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.announce-card .list-group-item {
+  font-size: 0.75rem;
+  padding: 8px 14px;
+  border: none;
+  background: transparent;
+  color: #444;
+}
+
+.announce-card .list-group {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.announce-card .list-group-item:last-child {
+  font-weight: 500;
+  color: #333;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.announce-card {
+  animation: fadeUp 0.6s ease both;
+}
