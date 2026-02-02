@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../../API/axios';
 import './AdminDashboard.css';
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const AdminDashboard = () => {
   const [houses, setHouses] = useState([]);
@@ -13,22 +13,21 @@ const AdminDashboard = () => {
   });
   const [alert, setAlert] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchDashboardData();
     fetchCurrentUser();
+    fetchDashboardData();
   }, []);
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/me`, {
-        credentials: 'include'
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentUser(data);
-      } else {
+      const response = await api.get('/api/me');
+      setCurrentUser(response.data);
+      
+      // Verify user is admin
+      if (response.data.role !== 'admin') {
         navigate('/login');
       }
     } catch (error) {
@@ -39,16 +38,19 @@ const AdminDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/admin/dashboard`, {
-        credentials: 'include'
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setHouses(data.houses);
-        setRecentTransactions(data.recent_transactions);
-      }
+      setLoading(true);
+      const response = await api.get('/api/admin/dashboard');
+      setHouses(response.data.houses);
+      setRecentTransactions(response.data.recent_transactions);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        navigate('/login');
+      } else {
+        showAlert('Failed to load dashboard data', 'danger');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,13 +67,14 @@ const AdminDashboard = () => {
       return;
     }
 
-    if (parseInt(formData.points) <= 0) {
+    const points = parseInt(formData.points);
+    if (isNaN(points) || points <= 0) {
       showAlert('Points must be a positive number', 'danger');
       return;
     }
 
     const houseName = houses.find(h => h.id === parseInt(formData.house_id))?.name;
-    const confirmMsg = `Are you sure you want to ${action} ${formData.points} points ${action === 'add' ? 'to' : 'from'} ${houseName}?\n\nReason: ${formData.reason}`;
+    const confirmMsg = `Are you sure you want to ${action} ${points} points ${action === 'add' ? 'to' : 'from'} ${houseName}?\n\nReason: ${formData.reason}`;
     
     if (!window.confirm(confirmMsg)) {
       return;
@@ -79,30 +82,22 @@ const AdminDashboard = () => {
 
     try {
       const endpoint = action === 'add' 
-        ? `${API_URL}/api/admin/points/add`
-        : `${API_URL}/api/admin/points/deduct`;
+        ? '/api/admin/points/add'
+        : '/api/admin/points/deduct';
 
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify(formData)
+      const response = await api.post(endpoint, {
+        house_id: parseInt(formData.house_id),
+        points: points,
+        reason: formData.reason
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        showAlert(data.message, 'success');
-        setFormData({ house_id: '', points: '', reason: '' });
-        fetchDashboardData();
-      } else {
-        showAlert(data.error || 'Failed to update points', 'danger');
-      }
+      showAlert(response.data.message, 'success');
+      setFormData({ house_id: '', points: '', reason: '' });
+      fetchDashboardData();
     } catch (error) {
       console.error('Error submitting points:', error);
-      showAlert('An error occurred', 'danger');
+      const errorMsg = error.response?.data?.error || 'Failed to update points';
+      showAlert(errorMsg, 'danger');
     }
   };
 
@@ -113,13 +108,11 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/api/logout`, {
-        method: 'POST',
-        credentials: 'include'
-      });
+      await api.post('/api/logout');
       navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error);
+      navigate('/login');
     }
   };
 
@@ -129,6 +122,14 @@ const AdminDashboard = () => {
     if (index === 2) return 'rank-3';
     return 'rank-other';
   };
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <h2>Loading Dashboard...</h2>
+      </div>
+    );
+  }
 
   return (
     <div>
