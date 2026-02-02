@@ -34,7 +34,7 @@ function Login() {
       );
 
       if (res.data.success) {
-        // Redirect to the appropriate dashboard
+        // Redirect to the appropriate dashboard on the backend
         window.location.href = res.data.redirect;
       }
     } catch (err) {
