@@ -1,8 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import "./Login.css";
-
-const API_URL = import.meta.env.VITE_API_URL || "https://houses-web.onrender.com";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -16,20 +14,13 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${API_URL}/api/login`,
-        { username, password },
-        {
-          withCredentials: true, // ✅ REQUIRED for Flask-Login
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await api.post("/api/login", {
+        username,
+        password,
+      });
 
       if (res.data.success && res.data.redirect) {
-        // ✅ HARD redirect to backend-rendered Jinja page
-        window.location.href = res.data.redirect;
+        window.location.href = res.data.redirect; // ✅ correct
       } else {
         setError("Login failed");
       }
@@ -48,34 +39,26 @@ function Login() {
     <div className="login-container">
       <div className="login-box">
         <h2>🏠 GDA Houses Login</h2>
-        <p className="login-subtitle">Sign in to access your dashboard</p>
 
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <button type="submit" disabled={loading}>
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            disabled={loading}
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            disabled={loading}
+            required
+          />
+          <button disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
