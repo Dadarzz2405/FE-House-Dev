@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../../API/axios";
 import "./Login.css";
-
-// ✅ Use environment variable for API URL
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,26 +14,23 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${API_URL}/api/login`,
-        {
-          username,
-          password,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await api.post("/api/login", {
+        username,
+        password,
+      });
 
-      if (res.data.success) {
-        // Redirect to the appropriate dashboard
-        window.location.href = res.data.redirect;
+      if (res.data.success && res.data.redirect) {
+        window.location.href = res.data.redirect; // ✅ correct
+      } else {
+        setError("Login failed");
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Login failed");
+      if (err.response?.status === 401) {
+        setError("Invalid username or password");
+      } else {
+        setError("Server error. Try again later.");
+      }
+    } finally {
       setLoading(false);
     }
   };
@@ -47,47 +39,29 @@ function Login() {
     <div className="login-container">
       <div className="login-box">
         <h2>🏠 GDA Houses Login</h2>
-        <p className="login-subtitle">Sign in to access your dashboard</p>
 
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <button type="submit" disabled={loading} className="login-button">
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            disabled={loading}
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            disabled={loading}
+            required
+          />
+          <button disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        <div className="login-footer">
-          <a href="/" className="back-link">
-            ← Back to Home
-          </a>
-        </div>
       </div>
     </div>
   );
