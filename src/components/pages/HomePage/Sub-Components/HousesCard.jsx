@@ -16,7 +16,7 @@ const houseImages = {
   "An-Naml": An_Naml,
 };
 
-const HousesCard = ({ houses, house, i }) => {
+const HousesCard = ({ houses, house, i, onClick }) => {
   const originX = 50;
   const originY = 900;
   const change = 18;
@@ -25,7 +25,7 @@ const HousesCard = ({ houses, house, i }) => {
   const angle = (i - middle) * change;
 
   return (
-    <div>
+    <div onClick={() => onClick(house)}>
       <div
         className="house-card"
         style={{

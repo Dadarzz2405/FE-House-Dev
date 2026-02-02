@@ -3,9 +3,22 @@ import { Card } from "react-bootstrap";
 import axios from "axios";
 import "./HomePage.css";
 import HousesCard from "./Sub-Components/HousesCard";
+import HousePopUpModal from "./Sub-Components/HousePopUp";
 
 function HomePage() {
   const [houses, setHouses] = useState([]);
+  const [isPopUp, setIsPopUp] = useState(false);
+  const [selectedHouse, setSelectedHouse] = useState("");
+
+  const popUp = (house) => {
+    setSelectedHouse(house);
+    setIsPopUp(true);
+  };
+
+  const closePopUp = () => {
+    setIsPopUp(false);
+    setSelectedHouse("");
+  };
 
   useEffect(() => {
     const getHouses = async () => {
@@ -29,10 +42,22 @@ function HomePage() {
       <div className="houses-display">
         {houses.map((house, i) => {
           return (
-            <HousesCard key={house.id} i={i} houses={houses} house={house} />
+            <HousesCard
+              key={house.id}
+              i={i}
+              houses={houses}
+              house={house}
+              onClick={popUp}
+            />
           );
         })}
       </div>
+
+      <HousePopUpModal
+        isOpen={isPopUp}
+        onClose={closePopUp}
+        house={selectedHouse}
+      />
 
       <div className="houses-title">
         <h1>HOUSES</h1>
