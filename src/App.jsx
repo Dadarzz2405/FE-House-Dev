@@ -10,7 +10,7 @@ import Announcement from "./components/pages/Announcements/Announcements";
 import Login from "./components/pages/Login/Login";
 import AdminDB from "./components/pages/AdminDashboard/AdminDashboard";
 import CaptainDB from "./components/pages/CaptainDashboard/CaptainDashboard";
-import CreateAnn from "./components/pages/CreateAnnouncemen/CreateAnnouncement";
+import CreateAnn from "./components/pages/CreateAnnouncement/CreateAnnouncement";
 
 const App = () => {
   const [activatedPage, setActivatedPage] = useState("");
