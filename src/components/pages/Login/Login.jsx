@@ -1,70 +1,86 @@
 import { useState } from "react";
-import api from "../../../API/axios";
-import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://houses-web.onrender.com";
+
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
+    setError("");
 
     try {
-      const res = await api.post("/api/login", {
-        username,
-        password,
+      const res = await fetch(`${API_URL}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // 🔑 required for session cookies
+        body: JSON.stringify({ username, password }),
       });
 
-      if (res.data.success && res.data.redirect) {
-        window.location.href = res.data.redirect; // ✅ correct
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Invalid username or password");
+        return;
+      }
+
+      // ✅ role-based routing handled in React
+      if (data.role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (data.role === "captain") {
+        navigate("/captain/dashboard");
       } else {
-        setError("Login failed");
+        setError("Unknown user role");
       }
     } catch (err) {
-      if (err.response?.status === 401) {
-        setError("Invalid username or password");
-      } else {
-        setError("Server error. Try again later.");
-      }
+      console.error("Login failed:", err);
+      setError("Server error. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>🏠 GDA Houses Login</h2>
+    <div>
+      <h2>Login</h2>
 
-        {error && <div className="error-message">{error}</div>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username</label>
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            disabled={loading}
             required
           />
+        </div>
+
+        <div>
+          <label>Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            disabled={loading}
             required
           />
-          <button disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-      </div>
+        </div>
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Signing in..." : "Login"}
+        </button>
+      </form>
     </div>
   );
-}
+};
 
 export default Login;
