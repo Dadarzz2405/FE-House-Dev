@@ -1,5 +1,5 @@
-import React from "react";
-import { CloseButton } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Button } from "react-bootstrap";
 
 import Al_Ghuraab from "../../../../Assets/Houses/Al-Ghuraab.png";
 import Al_HudHud from "../../../../Assets/Houses/Al-HudHud.png";
@@ -22,19 +22,26 @@ export default function HousePopUpModal({ isOpen, onClose, house }) {
 
   return (
     <div className="popup-bg" onClick={onClose}>
-      <div className="main-content" onClick={(e) => e.stopPropagation()}>
-        <div className="close-btn">
-          <CloseButton onClick={onClose} />
+      <div className="main-content">
+        <div className={`house-logo ${house.name.toLowerCase()}`}>
+          <div
+            className="logo"
+            style={{
+              backgroundImage: `url(${houseImages[house.name]})`,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          ></div>
         </div>
-        <div
-          className="house-logo"
-          style={{
-            backgroundImage: `url(${houseImages[house.name]})`,
-          }}
-        ></div>
-        <div className="content">
-          <h2>{house?.name}</h2>
-          <p>{house?.description}</p>
+        <div className="content-container">
+          <div className="content" onClick={(e) => e.stopPropagation()}>
+            <h2>{house?.name}</h2>
+            <p>{house?.description}</p>
+            <div className="pupup-btn">
+              <Button variant="outline-light" onClick={onClose}>
+                Close
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
