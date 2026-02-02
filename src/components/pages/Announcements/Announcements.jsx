@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
-import axios from "axios";
+import api from "../../../API/axios"; 
 import "./Announcements.css";
 
 const Announcements = () => {
@@ -9,24 +9,28 @@ const Announcements = () => {
 
   useEffect(() => {
     const getAnnounceData = async () => {
-      const data = await axios.get("http://localhost:5000/api/announcements");
+      try {
+        const data = await api.get("/api/announcements");
 
-      let finalData = [];
-      data.data.forEach((a) => {
-        finalData.push({
-          title: a.title,
-          content: a.content,
-          date: a.created_at,
-          house: a.house?.name ?? "Unknown",
-          captain: {
-            name: a.captain?.name ?? "Unknown",
-            username: a.captain?.username ?? "-",
-          },
+        let finalData = [];
+        data.data.forEach((a) => {
+          finalData.push({
+            title: a.title,
+            content: a.content,
+            date: a.created_at,
+            house: a.house?.name ?? "Unknown",
+            captain: {
+              name: a.captain?.name ?? "Unknown",
+              username: a.captain?.username ?? "-",
+            },
+          });
         });
-      });
 
-      setAnnounce(finalData);
-      console.log(data);
+        setAnnounce(finalData);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching announcements:", error);
+      }
     };
     getAnnounceData();
   }, []);

@@ -1,8 +1,10 @@
 import { useState } from "react";
-import api from "./../../../API/axios.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
+
+// ✅ Use environment variable for API URL
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -18,7 +20,7 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/login",
+        `${API_URL}/api/login`,
         {
           username,
           password,

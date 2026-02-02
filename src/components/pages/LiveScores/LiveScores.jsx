@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import api from "../../../API/axios"; 
 import "./LiveScore.css";
 
 const LiveScores = () => {
@@ -8,20 +8,25 @@ const LiveScores = () => {
 
   useEffect(() => {
     const getScoresData = async () => {
-      const data = await axios.get("http://localhost:5000/api/live-points");
+      try {
+        const data = await api.get("/api/live-points");
 
-      let finalData = [];
-      data.data.forEach((house) => {
-        finalData.push({
-          rank: house.rank,
-          name: house.name,
-          score: house.points,
+        let finalData = [];
+        data.data.forEach((house) => {
+          finalData.push({
+            rank: house.rank,
+            name: house.name,
+            score: house.points,
+          });
         });
-      });
-      sethousesRank(finalData);
+        sethousesRank(finalData);
+      } catch (error) {
+        console.error("Error fetching live scores:", error);
+      }
     };
     getScoresData();
   }, []);
+
   return (
     <>
       <div className="liveScores">
