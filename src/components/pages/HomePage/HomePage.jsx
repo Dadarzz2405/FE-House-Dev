@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import axios from "axios";
+import api from "../../../API/axios";
 import "./HomePage.css";
 import HousesCard from "./Sub-Components/HousesCard";
 
@@ -9,7 +9,7 @@ function HomePage() {
 
   useEffect(() => {
     const getHouses = async () => {
-      const response = await axios.get("http://localhost:5000/api/houses");
+      const response = await api.get("/api/houses");
       let data = [];
       response.data.forEach((house) => {
         data.push({
