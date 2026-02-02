@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import api from "../../../API/axios"; 
-import "./livescore.css";
+import "./LiveScore.css";
 
 const LiveScores = () => {
   const [housesRank, sethousesRank] = useState([]);
