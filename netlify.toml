@@ -1,31 +1,24 @@
 # Netlify Configuration for React SPA
 
 [build]
-  # Directory to build
-  base = "/"
-  
-  # Directory with the built files
-  publish = "dist"
-  
-  # Build command
   command = "npm run build"
+  publish = "dist"
 
-# Redirect all routes to index.html for client-side routing
+# Redirect all routes to index.html (required for React Router)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Headers for CORS and security
+# Security headers (CORS is handled by your backend, not Netlify)
 [[headers]]
   for = "/*"
   [headers.values]
-    Access-Control-Allow-Origin = "*"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Cache static assets
+# Cache static assets aggressively
 [[headers]]
   for = "/assets/*"
   [headers.values]
