@@ -14,122 +14,65 @@ const AdminDashboard = () => {
   const [alert, setAlert] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [uploadingLogo, setUploadingLogo] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchCurrentUser();
-    fetchDashboardData();
-  }, []);
+  // ... existing useEffect and functions ...
 
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await api.get('/api/me');
-      setCurrentUser(response.data);
-      
-      // Verify user is admin
-      if (response.data.role !== 'admin') {
-        navigate('/login');
-      }
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      navigate('/login');
-    }
-  };
+  const handleLogoUpload = async (houseId, event) => {
+    const file = event.target.files[0];
+    if (!file) return;
 
-  const fetchDashboardData = async () => {
-    try {
-      setLoading(true);
-      const response = await api.get('/api/admin/dashboard');
-      setHouses(response.data.houses);
-      setRecentTransactions(response.data.recent_transactions);
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-      if (error.response?.status === 401 || error.response?.status === 403) {
-        navigate('/login');
-      } else {
-        showAlert('Failed to load dashboard data', 'danger');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmitPoints = async (action) => {
-    if (!formData.house_id || !formData.points || !formData.reason) {
-      showAlert('Please fill in all fields', 'danger');
+    // Validate file
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      showAlert('Invalid file type. Please upload PNG, JPG, GIF, or WEBP', 'danger');
       return;
     }
 
-    const points = parseInt(formData.points);
-    if (isNaN(points) || points <= 0) {
-      showAlert('Points must be a positive number', 'danger');
+    if (file.size > 5 * 1024 * 1024) { // 5MB
+      showAlert('File too large. Maximum size is 5MB', 'danger');
       return;
     }
 
-    const houseName = houses.find(h => h.id === parseInt(formData.house_id))?.name;
-    const confirmMsg = `Are you sure you want to ${action} ${points} points ${action === 'add' ? 'to' : 'from'} ${houseName}?\n\nReason: ${formData.reason}`;
-    
-    if (!window.confirm(confirmMsg)) {
-      return;
-    }
+    const formData = new FormData();
+    formData.append('logo', file);
 
     try {
-      const endpoint = action === 'add' 
-        ? '/api/admin/points/add'
-        : '/api/admin/points/deduct';
-
-      const response = await api.post(endpoint, {
-        house_id: parseInt(formData.house_id),
-        points: points,
-        reason: formData.reason
-      });
+      setUploadingLogo(houseId);
+      const response = await api.post(
+        `/api/admin/house/${houseId}/logo`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
       showAlert(response.data.message, 'success');
-      setFormData({ house_id: '', points: '', reason: '' });
-      fetchDashboardData();
+      
+      // Update the house logo in state
+      setHouses(prevHouses => 
+        prevHouses.map(h => 
+          h.id === houseId 
+            ? { ...h, logo_url: response.data.url }
+            : h
+        )
+      );
     } catch (error) {
-      console.error('Error submitting points:', error);
-      const errorMsg = error.response?.data?.error || 'Failed to update points';
-      showAlert(errorMsg, 'danger');
+      console.error('Error uploading logo:', error);
+      showAlert(
+        error.response?.data?.error || 'Failed to upload logo',
+        'danger'
+      );
+    } finally {
+      setUploadingLogo(null);
+      event.target.value = ''; // Reset file input
     }
   };
 
-  const showAlert = (message, type) => {
-    setAlert({ message, type });
-    setTimeout(() => setAlert(null), 5000);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await api.post('/api/logout');
-      navigate('/login');
-    } catch (error) {
-      console.error('Error logging out:', error);
-      navigate('/login');
-    }
-  };
-
-  const getRankClass = (index) => {
-    if (index === 0) return 'rank-1';
-    if (index === 1) return 'rank-2';
-    if (index === 2) return 'rank-3';
-    return 'rank-other';
-  };
-
-  if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '50px' }}>
-        <h2>Loading Dashboard...</h2>
-      </div>
-    );
-  }
+  // ... rest of component ...
 
   return (
     <div>
@@ -149,151 +92,94 @@ const AdminDashboard = () => {
       </nav>
 
       <div className="dashboard-container">
-        {/* Header */}
-        <div className="dashboard-header">
-          <h1>Admin Dashboard</h1>
-          <p>Manage house points and view standings</p>
-        </div>
-
-        {/* Alert */}
-        {alert && (
-          <div className={`alert alert-${alert.type}`}>
-            {alert.message}
-          </div>
-        )}
+        {/* ... existing header and alert ... */}
 
         <div className="dashboard-grid">
-          {/* Points Management */}
-          <div className="card-custom">
-            <h2 className="card-title">📊 Points Management</h2>
-            
-            <div className="form-group">
-              <label htmlFor="house_id" className="form-label">Select House</label>
-              <select 
-                className="form-select" 
-                id="house_id" 
-                name="house_id"
-                value={formData.house_id}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Choose a house...</option>
-                {houses.map(house => (
-                  <option key={house.id} value={house.id}>
-                    {house.name} ({house.points} points)
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* ... existing Points Management card ... */}
+          
+          {/* ... existing Recent Transactions card ... */}
 
-            <div className="form-group">
-              <label htmlFor="points" className="form-label">Points Amount</label>
-              <input 
-                type="number" 
-                className="form-control" 
-                id="points" 
-                name="points"
-                placeholder="Enter points amount" 
-                min="1"
-                value={formData.points}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="reason" className="form-label">Reason</label>
-              <textarea 
-                className="form-control" 
-                id="reason" 
-                name="reason" 
-                rows="3" 
-                placeholder="Why are you adding/deducting points?"
-                value={formData.reason}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="btn-grid">
-              <button 
-                type="button" 
-                className="btn-add" 
-                onClick={() => handleSubmitPoints('add')}
-              >
-                ➕ Add Points
-              </button>
-              <button 
-                type="button" 
-                className="btn-deduct" 
-                onClick={() => handleSubmitPoints('deduct')}
-              >
-                ➖ Deduct Points
-              </button>
-            </div>
-          </div>
-
-          {/* Recent Transactions */}
-          <div className="card-custom">
-            <h2 className="card-title">📜 Recent Transactions</h2>
-            
-            {recentTransactions.length > 0 ? (
-              <div className="transactions-scroll">
-                {recentTransactions.map(transaction => (
-                  <div key={transaction.id} className="transaction-item">
-                    <div className="transaction-header">
-                      <span className="transaction-house">{transaction.house.name}</span>
-                      <span className={`transaction-points ${transaction.points_change > 0 ? 'positive' : 'negative'}`}>
-                        {transaction.points_change > 0 ? '+' : ''}{transaction.points_change}
-                      </span>
-                    </div>
-                    <div className="transaction-reason">{transaction.reason}</div>
-                    <div className="transaction-meta">
-                      by {transaction.admin.name} • {new Date(transaction.timestamp).toLocaleString()}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="no-content">No transactions yet</p>
-            )}
-          </div>
-
-          {/* Current House Standings */}
+          {/* ✅ ADD THIS: Logo Management Section */}
           <div className="card-custom full-width">
-            <h2 className="card-title">🏆 Current House Standings</h2>
+            <h2 className="card-title">🖼️ Manage House Logos</h2>
             
             <table>
               <thead>
                 <tr>
-                  <th style={{ width: '80px' }}>Rank</th>
-                  <th>House Name</th>
-                  <th style={{ width: '120px' }}>Points</th>
+                  <th style={{ width: '200px' }}>House</th>
+                  <th style={{ width: '120px' }}>Current Logo</th>
+                  <th>Upload New Logo</th>
                 </tr>
               </thead>
               <tbody>
-                {houses.map((house, index) => (
+                {houses.map((house) => (
                   <tr key={house.id}>
-                    <td>
-                      <span className={`rank-badge ${getRankClass(index)}`}>
-                        {index + 1}
-                      </span>
-                    </td>
                     <td>
                       <strong>{house.name}</strong>
                       <br />
-                      <small style={{ color: '#999' }}>{house.description}</small>
+                      <small style={{ color: '#999' }}>{house.points} points</small>
                     </td>
                     <td>
-                      <strong style={{ fontSize: '1.2rem', color: '#667eea' }}>
-                        {house.points}
-                      </strong>
+                      <img 
+                        src={house.logo_url}
+                        alt={house.name}
+                        style={{ 
+                          width: '80px', 
+                          height: '80px', 
+                          objectFit: 'contain',
+                          border: '2px solid #e0e0e0',
+                          borderRadius: '8px',
+                          padding: '5px'
+                        }}
+                        onError={(e) => {
+                          e.target.src = `https://via.placeholder.com/80?text=${house.name}`;
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                          onChange={(e) => handleLogoUpload(house.id, e)}
+                          disabled={uploadingLogo === house.id}
+                          style={{ 
+                            fontSize: '0.9rem',
+                            padding: '0.5rem',
+                            cursor: uploadingLogo === house.id ? 'not-allowed' : 'pointer'
+                          }}
+                        />
+                        {uploadingLogo === house.id && (
+                          <span style={{ color: '#667eea', fontWeight: 'bold' }}>
+                            Uploading...
+                          </span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            
+            <div style={{ 
+              marginTop: '1.5rem', 
+              padding: '1rem', 
+              backgroundColor: '#f8f9fa', 
+              borderRadius: '8px',
+              border: '1px solid #e0e0e0'
+            }}>
+              <strong>📝 Instructions:</strong>
+              <ul style={{ marginTop: '0.5rem', marginBottom: 0, lineHeight: '1.8' }}>
+                <li>Supported formats: PNG, JPG, JPEG, GIF, WEBP</li>
+                <li>Maximum file size: 5MB</li>
+                <li>Recommended size: 500x500 pixels or larger</li>
+                <li>Logo will be uploaded to Cloudinary and replace the existing one</li>
+                <li>Changes are instant and permanent</li>
+              </ul>
+            </div>
           </div>
+
+          {/* ... existing Current House Standings card ... */}
         </div>
       </div>
     </div>
