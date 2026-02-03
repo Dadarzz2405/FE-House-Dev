@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import api from "../../../API/axios"; 
+import api from "../../../API/axios";
 import "./LiveScore.css";
 
 const LiveScores = () => {
@@ -36,11 +36,11 @@ const LiveScores = () => {
           <p>Current standings of all Darsanians' Houses</p>
         </div>
         <div className="rank-table">
-          <Table bordered>
+          <Table responsive borderless>
             <thead>
-              <tr>
+              <tr className="table-header">
                 <th className="ranks-column">Ranks</th>
-                <th className="name-column">Houses Name</th>
+                <th className="name-column">Houses</th>
                 <th className="scores-column">Scores</th>
               </tr>
             </thead>
@@ -50,7 +50,7 @@ const LiveScores = () => {
                   <tr key={i}>
                     <td className="text-center">{house.rank}</td>
                     <td>{house.name}</td>
-                    <td>{house.score}</td>
+                    <td className="text-center">{house.score}</td>
                   </tr>
                 );
               })}

@@ -26,9 +26,13 @@
 
 .liveScores .rank-table table .scores-column {
   padding-inline: 10px;
-  width: 50px;
 }
 
 .liveScores .rank-table table .name-column {
   text-align: left;
+  width: 200px;
+}
+
+.liveScores .rank-table table .table-header th {
+  border-bottom: 2px solid #bcbcbc;
 }
