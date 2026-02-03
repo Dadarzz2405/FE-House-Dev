@@ -8,16 +8,17 @@ import HousePopUpModal from "./Sub-Components/HousePopUp";
 function HomePage() {
   const [houses, setHouses] = useState([]);
   const [isPopUp, setIsPopUp] = useState(false);
-  const [selectedHouse, setSelectedHouse] = useState("");
+  const [selectedHouse, setSelectedHouse] = useState({});
 
   const popUp = (house) => {
-    setSelectedHouse(house);
+    let data = houses.find((h) => h.name === house.name);
+    setSelectedHouse(data);
     setIsPopUp(true);
   };
 
   const closePopUp = () => {
     setIsPopUp(false);
-    setSelectedHouse("");
+    setSelectedHouse({});
   };
 
   useEffect(() => {
@@ -28,6 +29,7 @@ function HomePage() {
         data.push({
           id: Math.floor(Math.random() * 10000),
           name: house.name,
+          description: house.description,
         });
       });
       console.log(data);
