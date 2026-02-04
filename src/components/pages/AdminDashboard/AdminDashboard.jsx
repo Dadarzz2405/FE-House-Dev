@@ -162,7 +162,7 @@ const AdminDashboard = () => {
       );
     } finally {
       setUploadingLogo(null);
-      event.target.value = ''; // Reset file input
+      event.target.value = '';
     }
   };
 
