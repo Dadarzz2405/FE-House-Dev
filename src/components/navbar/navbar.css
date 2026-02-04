@@ -14,31 +14,7 @@ nav.navbar {
   font-weight: bold;
 }
 
-.navbar .houses-navbar {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.navbar .nav-links {
-  display: flex;
-  gap: 15px;
-}
-
-.navbar .nav-links a {
-  text-decoration: none;
-  color: white;
-  border-radius: 3px;
-  padding: 2px 5px 2px 5px;
-  transition: all 0.1s linear;
-}
-
-.navbar .nav-links a:hover {
-  background-color: white;
-  color: black;
+.navbar a.active-link {
+  color: #fff !important;
+  transition: color 0.2s ease-in-out;
 }

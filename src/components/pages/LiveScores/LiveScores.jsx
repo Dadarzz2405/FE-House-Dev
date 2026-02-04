@@ -2,9 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import api from "../../../API/axios";
 import "./LiveScore.css";
+import ScoreBar from "./Sub-Component/ScoreBar";
 
 const LiveScores = () => {
-  const [housesRank, sethousesRank] = useState([]);
+  const [housesRank, sethousesRank] = useState([
+    // { rank: 1, name: "Al-Ghuraab", score: 0 },
+    // { rank: 2, name: "An-Nun", score: 0 },
+    // { rank: 3, name: "Al-Hudhud", score: 0 },
+    // { rank: 4, name: "An-Naml", score: 0 },
+    // { rank: 5, name: "Al-Adiyat", score: 0 },
+    // { rank: 6, name: "An-Nahl", score: 0 },
+  ]);
+  const [scoreStats, setScoreStats] = useState({});
 
   useEffect(() => {
     const getScoresData = async () => {
@@ -27,6 +36,17 @@ const LiveScores = () => {
     getScoresData();
   }, []);
 
+  useEffect(() => {
+    const scoreRange = () => {
+      let scores = housesRank.map((house) => house.score);
+      let minScore = Math.min(...scores);
+      let maxScore = Math.max(...scores);
+      let range = maxScore - minScore;
+      setScoreStats({ minScore, maxScore, range });
+    };
+    scoreRange();
+  }, [housesRank]);
+
   return (
     <>
       <div className="liveScores">
@@ -35,27 +55,16 @@ const LiveScores = () => {
           <h1>🏆 Live House Scores</h1>
           <p>Current standings of all Darsanians' Houses</p>
         </div>
-        <div className="rank-table">
-          <Table responsive borderless>
-            <thead>
-              <tr className="table-header">
-                <th className="ranks-column">Ranks</th>
-                <th className="name-column">Houses</th>
-                <th className="scores-column">Scores</th>
-              </tr>
-            </thead>
-            <tbody>
-              {housesRank.map((house, i) => {
-                return (
-                  <tr key={i}>
-                    <td className="text-center">{house.rank}</td>
-                    <td>{house.name}</td>
-                    <td className="text-center">{house.score}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+        <div className="house-rankings">
+          {housesRank.map((house, index) => (
+            <ScoreBar
+              key={index}
+              rank={house.rank}
+              score={house.score}
+              scoreStats={scoreStats}
+              house={house.name}
+            />
+          ))}
         </div>
       </div>
     </>

@@ -10,29 +10,57 @@
   margin-top: 50px;
 }
 
-.liveScores .rank-table {
-  width: 50%;
-  margin-top: 20px;
+.liveScores .house-rankings {
+  width: 80%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.liveScores .rank-table table {
+.liveScores .house-rankings .ranking {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
+}
+
+.liveScores .house-rankings .ranking .rank {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.liveScores .house-rankings .ranking .score-bar {
+  height: 400px;
+  width: 150px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: column;
+}
+
+.liveScores .house-rankings .ranking .score-bar .bar {
+  height: 100px;
+  background-color: #4caf50;
+  padding-right: 10px;
+  color: white;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  position: relative;
   width: 100%;
 }
 
-.liveScores .rank-table table .ranks-column {
-  width: 50px;
-  padding-inline: 10px;
+.liveScores .house-rankings .ranking .score-bar p {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 3rem;
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  line-height: 50px;
+  transform: translateX(-50%);
 }
 
-.liveScores .rank-table table .scores-column {
-  padding-inline: 10px;
-}
-
-.liveScores .rank-table table .name-column {
-  text-align: left;
-  width: 200px;
-}
-
-.liveScores .rank-table table .table-header th {
-  border-bottom: 2px solid #bcbcbc;
+.liveScores .house-rankings .ranking img {
+  width: 100%;
 }
