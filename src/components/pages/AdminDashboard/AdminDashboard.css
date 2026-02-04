@@ -1,6 +1,5 @@
-/* Navbar */
 .navbar-custom {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #003876;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
@@ -56,7 +55,7 @@
 }
 
 .dashboard-header h1 {
-  color: #333;
+  color: #003876;
   margin: 0 0 0.5rem 0;
 }
 
@@ -95,11 +94,11 @@
 }
 
 .card-title {
-  color: #333;
+  color: #003876;
   font-weight: bold;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #667eea;
+  border-bottom: 2px solid #D4AF37;
 }
 
 /* Forms */
@@ -109,7 +108,7 @@
 
 .form-label {
   font-weight: 600;
-  color: #333;
+  color: #003876;
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -125,9 +124,9 @@
 
 .form-select:focus,
 .form-control:focus {
-  border-color: #667eea;
+  border-color: #003876;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 56, 118, 0.1);
 }
 
 /* Buttons */
@@ -150,23 +149,25 @@
 }
 
 .btn-add {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: #28a745;
   color: white;
 }
 
 .btn-add:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+  background: #218838;
 }
 
 .btn-deduct {
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  background: #dc3545;
   color: white;
 }
 
 .btn-deduct:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  background: #c82333;
 }
 
 /* Transactions */
@@ -198,7 +199,7 @@
 
 .transaction-house {
   font-weight: bold;
-  color: #333;
+  color: #003876;
 }
 
 .transaction-points {
@@ -235,7 +236,7 @@ table {
 }
 
 thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #003876;
   color: white;
 }
 
@@ -271,21 +272,21 @@ tbody tr:hover {
 }
 
 .rank-1 {
-  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
-  color: #333;
+  background: #D4AF37;
+  color: #003876;
 }
 
 .rank-2 {
-  background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
-  color: #333;
+  background: #C0C0C0;
+  color: #003876;
 }
 
 .rank-3 {
-  background: linear-gradient(135deg, #cd7f32 0%, #b8733d 100%);
+  background: #CD7F32;
 }
 
 .rank-other {
-  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  background: #6c757d;
 }
 
 /* Grid Layout */
@@ -306,7 +307,6 @@ tbody tr:hover {
   font-style: italic;
 }
 
-/* Responsive */
 @media (max-width: 992px) {
   .dashboard-grid {
     grid-template-columns: 1fr;

@@ -5,7 +5,7 @@ nav.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
+  background-color: #003876;
   position: relative;
 }
 
@@ -39,6 +39,6 @@ nav.navbar {
 }
 
 .navbar .nav-links a:hover {
-  background-color: white;
-  color: black;
+  background-color: #D4AF37;
+  color: #003876;
 }
