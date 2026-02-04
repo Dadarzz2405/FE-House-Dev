@@ -146,7 +146,6 @@ const AdminDashboard = () => {
 
       showAlert(response.data.message, 'success');
       
-      // Update the house logo in state
       setHouses(prevHouses => 
         prevHouses.map(h => 
           h.id === houseId 
@@ -186,7 +185,6 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      {/* Navbar */}
       <nav className="navbar-custom">
         <a href="#" className="navbar-brand">
           🎯 Admin Dashboard
@@ -202,13 +200,11 @@ const AdminDashboard = () => {
       </nav>
 
       <div className="dashboard-container">
-        {/* Header */}
         <div className="dashboard-header">
           <h1>🎯 Admin Dashboard</h1>
           <p>Manage house points and view standings</p>
         </div>
 
-        {/* Alert */}
         {alert && (
           <div className={`alert alert-${alert.type}`}>
             {alert.message}
@@ -216,7 +212,6 @@ const AdminDashboard = () => {
         )}
 
         <div className="dashboard-grid">
-          {/* Points Management */}
           <div className="card-custom">
             <h2 className="card-title">📊 Points Management</h2>
             
@@ -280,7 +275,6 @@ const AdminDashboard = () => {
             </form>
           </div>
 
-          {/* Recent Transactions */}
           <div className="card-custom">
             <h2 className="card-title">📜 Recent Transactions</h2>
             
@@ -306,7 +300,6 @@ const AdminDashboard = () => {
             )}
           </div>
 
-          {/* Logo Management */}
           <div className="card-custom full-width">
             <h2 className="card-title">🖼️ Manage House Logos</h2>
             
@@ -386,7 +379,6 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Current House Standings */}
           <div className="card-custom full-width">
             <h2 className="card-title">🏆 Current House Standings</h2>
             
