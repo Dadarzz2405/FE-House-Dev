@@ -136,7 +136,7 @@ const CaptainDashboard = () => {
           <div className="card-custom">
             <h2 className="card-title">⚡ Quick Actions</h2>
             <button 
-              onClick={() => navigate('/create-announcement')}
+              onClick={() => navigate('/createann')}
               className="btn-create"
             >
               📢 Create New Announcement

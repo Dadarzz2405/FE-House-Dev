@@ -9,6 +9,8 @@ import LiveScores from "./components/pages/LiveScores/LiveScores";
 import Announcement from "./components/pages/Announcements/Announcements";
 import Login from "./components/pages/Login/Login";
 import AdminDB from "./components/pages/AdminDashboard/AdminDashboard";
+import CaptainDB from "./components/pages/CaptainDashboard/CaptainDashboard";
+import CreateAnn from "./components/pages/CreateAnnouncement/CreateAnnouncement";
 
 console.log('App.jsx is loading...');
 
@@ -38,6 +40,8 @@ const App = () => {
         <Route path="/announcement" element={<Announcement />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admindb" element={<AdminDB />} />
+        <Route path="/captaindb" element={<CaptainDB />} />
+        <Route path="/createann" element={<CreateAnn />} />
       </Routes>
     </div>
   );
