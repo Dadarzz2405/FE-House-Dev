@@ -12,11 +12,15 @@ nav.navbar {
 .navbar .navbar-brand {
   color: white;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-logo {
   height: 40px;
   width: auto;
+  margin-right: 10px;
 }
 
 .navbar .houses-navbar {
@@ -44,6 +48,6 @@ nav.navbar {
 }
 
 .navbar .nav-links a:hover {
-  background-color: #D4AF37;
+  background-color: #d4af37;
   color: #003876;
 }
