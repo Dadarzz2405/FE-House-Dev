@@ -24,6 +24,15 @@ const ScoreBar = ({ score, scoreStats, rank, house }) => {
   let minBarScore;
   let maxBarScore;
 
+  const animationDelay = {
+    1: 5,
+    2: 4,
+    3: 3,
+    4: 2,
+    5: 1,
+    6: 0,
+  };
+
   minBarScore = Math.trunc((minScore / range) * range);
   if (minScore - minBarScore < 0.2 * range) {
     minBarScore = minScore - 0.2 * range;
@@ -41,10 +50,18 @@ const ScoreBar = ({ score, scoreStats, rank, house }) => {
   return (
     <div className={`ranking r-${rank}`}>
       <div className="score-bar">
-        <img src={houseImages[house]} alt={house} />
+        <img
+          src={houseImages[house]}
+          alt={house}
+          style={{ animationDelay: `${0.2 * animationDelay[rank]}s` }}
+        />
         <div className="bar" style={{ height: `${barLength}%` }}>
           <p>{score}</p>
         </div>
+        <div
+          className="after-custom"
+          style={{ animationDelay: `${0.2 * animationDelay[rank]}s` }}
+        ></div>
       </div>
       <div className="rank">{rank}</div>
     </div>
