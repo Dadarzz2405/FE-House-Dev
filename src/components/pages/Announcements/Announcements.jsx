@@ -18,7 +18,7 @@ const Announcements = () => {
           finalData.push({
             title: a.title,
             content: a.content,
-            image_url: a.image_url,  // ✅ Include image URL
+            image_url: a.image_url,  
             date: a.created_at,
             house: a.house?.name ?? "Unknown",
             captain: {

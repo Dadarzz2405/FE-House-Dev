@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import "./navbar.css";
-
+import logo from "../../Assets/LogoSchool/Whitetrans.png";
 const NavbarContainer = ({ activatedPage }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="navbar-custom">
       <Container>
         <Navbar.Brand href="/">
-          <span className="brand-logo">🏠</span>
-          <span className="brand-text">GDA Houses</span>
+          <img src={logo} alt="Logo" className="navbar-logo" />
+          <span className="navbar-brand-text">Darsa Houses</span>
         </Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -14,6 +14,11 @@ nav.navbar {
   font-weight: bold;
 }
 
+.navbar-logo {
+  height: 40px;
+  width: auto;
+}
+
 .navbar .houses-navbar {
   font-size: 1.2rem;
   font-weight: bold;
