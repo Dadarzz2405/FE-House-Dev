@@ -63,7 +63,8 @@
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  background-color: #003876;
 }
 
 .liveScores .house-rankings .ranking .score-bar p {
@@ -85,8 +86,8 @@
 .liveScores .house-rankings .ranking .score-bar .after-custom {
   position: absolute;
   top: 0;
-  right: 0;
-  left: 0;
+  right: -10px;
+  left: -10px;
   height: 111%;
   background: linear-gradient(180deg, white 0%, white 90%, transparent 100%);
   animation: barAppears 2s ease-in forwards;
