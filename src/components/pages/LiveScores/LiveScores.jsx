@@ -6,35 +6,35 @@ import ScoreBar from "./Sub-Component/ScoreBar";
 
 const LiveScores = () => {
   const [housesRank, sethousesRank] = useState([
-    { rank: 1, name: "Al-Ghuraab", score: 500 },
-    { rank: 2, name: "An-Nun", score: 450 },
-    { rank: 3, name: "Al-Hudhud", score: 430 },
-    { rank: 4, name: "An-Naml", score: 430 },
-    { rank: 5, name: "Al-Adiyat", score: 400 },
-    { rank: 6, name: "An-Nahl", score: 390 },
+    // { rank: 1, name: "Al-Ghuraab", score: 500 },
+    // { rank: 2, name: "An-Nun", score: 450 },
+    // { rank: 3, name: "Al-Hudhud", score: 430 },
+    // { rank: 4, name: "An-Naml", score: 430 },
+    // { rank: 5, name: "Al-Adiyat", score: 400 },
+    // { rank: 6, name: "An-Nahl", score: 390 },
   ]);
   const [scoreStats, setScoreStats] = useState({});
 
-  // useEffect(() => {
-  //   const getScoresData = async () => {
-  //     try {
-  //       const data = await api.get("/api/live-points");
+  useEffect(() => {
+    const getScoresData = async () => {
+      try {
+        const data = await api.get("/api/live-points");
 
-  //       let finalData = [];
-  //       data.data.forEach((house) => {
-  //         finalData.push({
-  //           rank: house.rank,
-  //           name: house.name,
-  //           score: house.points,
-  //         });
-  //       });
-  //       sethousesRank(finalData);
-  //     } catch (error) {
-  //       console.error("Error fetching live scores:", error);
-  //     }
-  //   };
-  //   getScoresData();
-  // }, []);
+        let finalData = [];
+        data.data.forEach((house) => {
+          finalData.push({
+            rank: house.rank,
+            name: house.name,
+            score: house.points,
+          });
+        });
+        sethousesRank(finalData);
+      } catch (error) {
+        console.error("Error fetching live scores:", error);
+      }
+    };
+    getScoresData();
+  }, []);
 
   useEffect(() => {
     const scoreRange = () => {
