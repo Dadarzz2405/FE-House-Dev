@@ -11,37 +11,33 @@ const NavbarContainer = ({ activatedPage }) => {
           <img src={logo} alt="Logo" className="navbar-logo" />
           <span className="navbar-brand-text">Darsa Houses</span>
         </Navbar.Brand>
-        
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        
+
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link 
-              as={Link} 
-              to="/" 
+            <Nav.Link
+              as={Link}
+              to="/"
               className={activatedPage === "/" ? "active-link" : ""}
             >
               Home
             </Nav.Link>
-            <Nav.Link 
-              as={Link} 
-              to="/livescores" 
+            <Nav.Link
+              as={Link}
+              to="/livescores"
               className={activatedPage === "/livescores" ? "active-link" : ""}
             >
               Live Scores
             </Nav.Link>
-            <Nav.Link 
-              as={Link} 
-              to="/announcement" 
+            <Nav.Link
+              as={Link}
+              to="/announcement"
               className={activatedPage === "/announcement" ? "active-link" : ""}
             >
               Announcements
             </Nav.Link>
-            <Nav.Link 
-              as={Link}
-              to="/login"
-              className="login-link"
-            >
+            <Nav.Link as={Link} to="/login" className="login-link">
               Login
             </Nav.Link>
           </Nav>
