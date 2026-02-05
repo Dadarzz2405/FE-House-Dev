@@ -69,6 +69,7 @@ const Announcements = () => {
               <Card.Title>{value.title}</Card.Title>
               <Card.Text>{value.content}</Card.Text>
               
+              {/* ✅ Display image if available */}
               {value.image_url && (
                 <div className="announcement-image">
                   <img 

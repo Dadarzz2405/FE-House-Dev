@@ -8,6 +8,17 @@
 
 .liveScores .heading {
   margin-top: 50px;
+  text-align: center;
+}
+
+.liveScores .heading h1 {
+  color: #003876;
+  font-weight: bold;
+}
+
+.liveScores .heading p {
+  color: #666;
+  font-size: 1.1rem;
 }
 
 .liveScores .house-rankings {
@@ -49,6 +60,10 @@
   flex-direction: column;
   position: relative;
   width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .liveScores .house-rankings .ranking .score-bar p {
@@ -99,5 +114,28 @@
   100% {
     opacity: 1;
     transform: translateY(0px);
+  }
+}
+
+.liveScores .rank-table table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.liveScores .rank-table table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.liveScores .rank-table table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.liveScores .rank-table table tbody td {
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .liveScores .rank-table {
+    width: 90%;
   }
 }

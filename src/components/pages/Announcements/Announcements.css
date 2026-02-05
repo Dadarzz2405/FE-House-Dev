@@ -3,7 +3,9 @@ h1 {
   margin: 40px 0 20px;
   font-weight: 600;
   letter-spacing: 0.5px;
+  color: #003876;
 }
+
 .announce-card {
   position: relative;
   margin: 30px auto;
@@ -33,7 +35,7 @@ h1 {
   left: 0;
   height: 6px;
   width: 100%;
-  background: linear-gradient(90deg, #5f9cff, #7ae0c3);
+  background: linear-gradient(90deg, #003876, #D4AF37);
 }
 
 .announce-card .card-body {
@@ -44,7 +46,7 @@ h1 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #222;
+  color: #003876;
 }
 
 .announce-card .card-text {
@@ -59,6 +61,24 @@ h1 {
   color: #888;
 }
 
+.announcement-image {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.announcement-img {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-date {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
 .announce-card .list-group-item {
   font-size: 0.75rem;
   padding: 8px 14px;
@@ -68,12 +88,12 @@ h1 {
 }
 
 .announce-card .list-group {
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid rgba(0, 56, 118, 0.1);
 }
 
 .announce-card .list-group-item:last-child {
   font-weight: 500;
-  color: #333;
+  color: #003876;
 }
 
 @keyframes fadeUp {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../navbar/navbar";
 import api from "../../../API/axios";
 
 const Login = () => {
@@ -49,57 +50,60 @@ const Login = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.loginBox}>
-        <h2 style={styles.title}>Login</h2>
+    <>
+      <Navbar activatedPage="/login" />
+      <div style={styles.container}>
+        <div style={styles.loginBox}>
+          <h2 style={styles.title}>Login</h2>
 
-        {error && <div style={styles.errorBox}>{error}</div>}
+          {error && <div style={styles.errorBox}>{error}</div>}
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              style={styles.input}
-              placeholder="Enter your username"
-            />
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                style={styles.input}
+                placeholder="Enter your username"
+              />
+            </div>
+
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={styles.input}
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={loading}
+              style={{
+                ...styles.button,
+                opacity: loading ? 0.6 : 1,
+                cursor: loading ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {loading ? "Signing in..." : "Login"}
+            </button>
+          </form>
+
+          <div style={styles.testCredentials}>
+            <p style={styles.testTitle}>Test Credentials:</p>
+            <p style={styles.testText}>Admin: admin / tes123</p>
+            <p style={styles.testText}>Captain: ghuraab / tes123</p>
           </div>
-
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              style={styles.input}
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={loading}
-            style={{
-              ...styles.button,
-              opacity: loading ? 0.6 : 1,
-              cursor: loading ? 'not-allowed' : 'pointer'
-            }}
-          >
-            {loading ? "Signing in..." : "Login"}
-          </button>
-        </form>
-
-        <div style={styles.testCredentials}>
-          <p style={styles.testTitle}>Test Credentials:</p>
-          <p style={styles.testText}>Admin: admin / tes123</p>
-          <p style={styles.testText}>Captain: ghuraab / tes123</p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -108,7 +112,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 50px)',
     backgroundColor: '#f5f5f5',
     padding: '20px'
   },
@@ -118,12 +122,13 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
     width: '100%',
-    maxWidth: '400px'
+    maxWidth: '400px',
+    border: '2px solid #e0e0e0'
   },
   title: {
     textAlign: 'center',
     marginBottom: '30px',
-    color: '#333',
+    color: '#003876',
     fontSize: '28px'
   },
   errorBox: {
@@ -146,7 +151,7 @@ const styles = {
   },
   label: {
     fontWeight: '600',
-    color: '#555',
+    color: '#003876',
     fontSize: '14px'
   },
   input: {
@@ -159,7 +164,7 @@ const styles = {
   },
   button: {
     padding: '14px',
-    backgroundColor: '#333',
+    backgroundColor: '#003876',
     color: 'white',
     border: 'none',
     borderRadius: '5px',
@@ -173,12 +178,12 @@ const styles = {
     padding: '15px',
     backgroundColor: '#f9f9f9',
     borderRadius: '5px',
-    borderLeft: '4px solid #667eea'
+    borderLeft: '4px solid #D4AF37'
   },
   testTitle: {
     fontWeight: '600',
     marginBottom: '8px',
-    color: '#333',
+    color: '#003876',
     fontSize: '14px'
   },
   testText: {
